@@ -57,8 +57,7 @@ module procesador_monociclo(
   wire [31:0] salSum2;
   wire FuentePC;
   wire [31:0] toPC;
-  //wire [3:0] varCuatro;
-  wire [31:0] out2;//pc
+  wire [31:0]direinstrux;
  parameter varCuatro=3'b100;
  
  

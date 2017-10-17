@@ -22,10 +22,10 @@
 
 module memoria_datos(clk,EscrMem,Direc,Datain,LeerMem,Dataout);
     input clk;
-    input EscrMem;
+    input EscrMem;//bit
     input [7:0] Direc;
     input [31:0] Datain;
-    input LeerMem;
+    input LeerMem;//bit
     output reg [31:0] Dataout;
     
 reg [255:0] ROM [31:0];

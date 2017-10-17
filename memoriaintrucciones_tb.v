@@ -25,7 +25,7 @@ module memoriaintrucciones_tb;
    reg [5:0] direinstru;
    wire [31:0] instru;
     
-memoriaintrucciones uut1(
+memoriaintrucciones uut(
     .direinstru(direinstru),
     .instru(instru)
  );
@@ -38,7 +38,7 @@ direinstru = 6'b000001;
 #50;
 direinstru = 6'b000010;
 #50;
-
+direinstru = 6'b000011;
 
 
 end

@@ -23,13 +23,13 @@
 module pcBlock(
     input [31:0]in,
     input clk,
-    output  [31:0] salida    
+    output reg [31:0] salida    
     );
     //reg [31:0] aux;
-    assign salida=in;
-   /* always @(posedge clk)
+    //assign salida=in;
+    always @(posedge clk)
         begin
             salida = in;
             
-        end*/
+        end
 endmodule

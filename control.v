@@ -18,10 +18,7 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-parameter [8:0] op1 = 9'b100100010; 
-parameter [8:0] op2 = 9'b011110000; 
-parameter [8:0] op3 = 9'bx1x001000; 
-parameter [8:0] op4 = 9'bx0x000101; 
+
 
 module control(instru,clk,RegDest,SaltoCond,LeerMem,MemaReg,ALUOp,EscrMem,FuenteALU,EscrReg);
 
@@ -37,6 +34,10 @@ output wire FuenteALU;
 output wire EscrReg;
 
 reg [8:0]aux;
+parameter [8:0] op1 = 9'b100_100_010; 
+parameter [8:0] op2 = 9'b0_1111_0000; 
+parameter [8:0] op3 = 9'bx1x001000; 
+parameter [8:0] op4 = 9'bx0x000101; 
 
 always @ (posedge clk)
 begin 

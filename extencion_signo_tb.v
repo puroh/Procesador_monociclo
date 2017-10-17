@@ -25,7 +25,7 @@ module extencion_signo_tb;
     reg [15:0] instr;
     wire [31:0] oinstr;
     
-    extencion_signo uut2 (
+    extencion_signo uut (
         .instr(instr),
         .oinstr(oinstr)
     );
@@ -33,11 +33,16 @@ module extencion_signo_tb;
     initial begin 
     
     instr = 16'b1111111111111111;
-    #50;
+    #100;
     
     instr = 16'b0111111111111111;
-    #50;
+    #100;
     
+    instr = 16'b1111111111111111;
+    #100;
+    
+    instr = 16'b0111111111111111;
+    #100;
     
     end
     
