@@ -47,7 +47,7 @@ always
 
 initial begin
 	EscrMem	=	1'b1;
-	Direc 	=	8'b0000_0000;
+	Direc 	=	8'b0000_0001;
 	Datain	=	32'b0000_0000_0000_0000_0000_0000_0110_0000;
 	LeerMem	=	1'b0;
 	#100

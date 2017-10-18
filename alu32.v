@@ -1,4 +1,4 @@
-module alu32(data1, data2 , clk, ctrl, oCarry,oZero, out);  
+module alu32(data1, data2 ,clk, ctrl, oCarry,oZero, out);  
   
 input [31:0] data1;
 input [31:0] data2;
@@ -8,15 +8,13 @@ output reg oCarry;
 output reg oZero;
 output reg [31:0] out;
 
-always@ (ctrl)
+always@ (posedge clk)
     begin 
         case(ctrl)
             3'b000: {oCarry ,out} <= data1+data2;
             3'b001: begin {oCarry, out} <= data1-data2;
-                              
-            
-                
-                    if (out == 0)
+                                              
+                    if (out == 32'b0000_0000_0000_0000_0000_0000_0000_0000)//no entra
                             oZero = 1;
                         else 
                             oZero = 0;

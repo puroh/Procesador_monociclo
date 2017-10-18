@@ -43,8 +43,8 @@ begin
         end
     else
         begin
-        end
+        
             Dataout = Dataout;
         end
-   
+   end
 endmodule
