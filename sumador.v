@@ -27,6 +27,10 @@ module sumador(
 	output [31:0] s
 	);
 assign s = a + b;
+always @(s) begin  
+  $display("################### s=%d \n",s);
+end
+
 //assign s = ~a & ~b & cIn + ~a & b & ~cIn + a & ~b & ~cIn + a & b & cIn;
 
 //assign cOut = b & cIn + a & cIn + ab;

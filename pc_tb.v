@@ -24,16 +24,17 @@ module pc_tb();
  reg clk;
  reg SaltoCond;
  reg [31:0] extSigno;
- reg zero;
+ reg oZero;
  //salida
  
- wire  [31:0] dirLectura;
+ wire  [31:0] direinstrux;
  
  pc uut(
     .clk(clk),
     .SaltoCond(SaltoCond),
     .extSigno(extSigno),
-    .zero(zero)   
+    .oZero(oZero),
+	.direinstrux(direinstrux)   
     
  
  );
@@ -47,26 +48,27 @@ module pc_tb();
     
     initial begin
         //initial inputs
-       zero=1'b0;
+       oZero=1'b0;
        SaltoCond=1'b0;
        extSigno=32'b1100_0000_0000_0000_0000_0000_0000_0001;
        //wait 100ns
        #100
-       zero=1'b1;
+       oZero=1'b0;
        SaltoCond=1'b0;
        extSigno=32'b1100_0000_0000_0000_0000_0000_0000_0001;
        #100
-       zero=1'b0;
+       oZero=1'b0;
+       SaltoCond=1'b0;
+       extSigno=32'b1100_0000_0000_0000_0000_0000_0000_0001;
+       #100
+       oZero=1'b1;
        SaltoCond=1'b1;
        extSigno=32'b1100_0000_0000_0000_0000_0000_0000_0001;
        #100
-       zero=1'b1;
-       SaltoCond=1'b1;
-       extSigno=32'b1100_0000_0000_0000_0000_0000_0000_0001;
-       #100
-       zero=1'b1;
+       oZero=1'b1;
        SaltoCond=1'b1;
        extSigno=32'b1100_0000_0000_0000_0000_0000_0000_0001; 
+					
        #100;
             
         

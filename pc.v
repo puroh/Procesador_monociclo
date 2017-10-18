@@ -35,7 +35,7 @@ module pc(
 	//wire [3:0] varCuatro;
 	
 	
-	parameter varCuatro=3'b100;
+	parameter varCuatro=32'b0000_0000_0000_0000_0000_0000_0000_0100; 
 	
 	sumador sum2(
                 .a(sum2sum),

@@ -27,9 +27,13 @@ module pcBlock(
     );
     //reg [31:0] aux;
     //assign salida=in;
+	//parameter aux=0;
     always @(posedge clk)
         begin
-            salida = in;
+			if (in==32'bxxxx_xxxx_xxxx_xxxx_xxxx_xxxx_xxxx_xxxx)
+            	salida = in;
+			else
+				salida = in+32'b0000_0000_0000_0000_0000_0000_0000_0001;;
             
         end
 endmodule
