@@ -58,6 +58,7 @@ module procesador_monociclo(
   wire FuentePC;
   wire [31:0] toPC;
   wire [31:0]direinstrux;
+  wire reset;
  parameter varCuatro=3'b100;
  
  
@@ -112,9 +113,9 @@ module procesador_monociclo(
            .SaltoCond(SaltoCond),
             .extSigno(oinstru),
             .oZero(oZero),
-           .direinstrux(direinstrux),
-           .clk(clk)
-             
+            .direinstrux(direinstrux),
+            .clk(clk),  
+            .reset(reset)           
    );
 
 

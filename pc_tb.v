@@ -25,16 +25,18 @@ module pc_tb();
  reg SaltoCond;
  reg [31:0] extSigno;
  reg oZero;
+ reg reset;
  //salida
  
- wire  [31:0] direinstrux;
+ wire  [31:0] direinstru;
  
  pc uut(
     .clk(clk),
     .SaltoCond(SaltoCond),
     .extSigno(extSigno),
     .oZero(oZero),
-	.direinstrux(direinstrux)   
+	.direinstru(direinstru),  
+	.reset(reset) 
     
  
  );
@@ -48,26 +50,33 @@ module pc_tb();
     
     initial begin
         //initial inputs
+       reset = 1'b1;
+       extSigno = 32'b0000_0000_0000_0000_0000_0000_0000_0000;
        oZero=1'b0;
-       SaltoCond=1'b0;
-       extSigno=32'b1100_0000_0000_0000_0000_0000_0000_0001;
+       SaltoCond = 1'b0;
+       #100
+       reset = 1'b0;
+       #100
+       oZero=1'b0;
+       SaltoCond = 1'b0;
+       extSigno=32'b0000_0000_0000_0000_0000_0000_0000_0001;
        //wait 100ns
        #100
-       oZero=1'b0;
+       oZero = 1'b0;
        SaltoCond=1'b0;
-       extSigno=32'b1100_0000_0000_0000_0000_0000_0000_0001;
+       extSigno=32'b0000_0000_0000_0000_0000_0000_0000_0001;
        #100
        oZero=1'b0;
        SaltoCond=1'b0;
-       extSigno=32'b1100_0000_0000_0000_0000_0000_0000_0001;
+       extSigno=32'b0000_0000_0000_0000_0000_0000_0000_0001;
        #100
        oZero=1'b1;
        SaltoCond=1'b1;
-       extSigno=32'b1100_0000_0000_0000_0000_0000_0000_0001;
+       extSigno=32'b0000_0000_0000_0000_0000_0000_0000_0001;
        #100
        oZero=1'b1;
        SaltoCond=1'b1;
-       extSigno=32'b1100_0000_0000_0000_0000_0000_0000_0001; 
+       extSigno=32'b0000_0000_0000_0000_0000_0000_0000_0001; 
 					
        #100;
             

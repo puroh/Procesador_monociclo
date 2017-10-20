@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 06.10.2017 08:53:47
+// Create Date: 26.09.2017 09:56:51
 // Design Name: 
-// Module Name: sumador
+// Module Name: ALU_tb
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -19,22 +19,35 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module sumador(
-	input [31:0] a,
-	output [31:0] s
-	);
 
-assign s = a + 1;
+module alu32tb();
 
+reg [31:0] iA;
+reg [31:0] iB;
+reg [2:0] ctrl;
 
-/*always @(a or b) begin  
-  $display("Sumador presente s=%h ",s);
-end*/
+wire [31:0]out;
+wire oCarry;
 
+alu32 uut(.iA(iA),.iB(iB),.ctrl(ctrl),.out(out),.oCarry(oCarry));
 
+initial begin
 
-//assign s = ~a & ~b & cIn + ~a & b & ~cIn + a & ~b & ~cIn + a & b & cIn;
+    iA = 32'b1;
+    iB = 32'b1;
 
-//assign cOut = b & cIn + a & cIn + ab;
+ctrl = 3'b000;
+
+#100; 
+
+iA = 32'b1;
+iB = 32'b0;
+
+ctrl = 3'b000;
+
+#100;
+$finish;
+end 
+
 
 endmodule

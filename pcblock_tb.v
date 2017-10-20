@@ -21,12 +21,12 @@
 
 module pcBlock_tb;
 	reg [31:0] in;
-	reg [31:0] out;
+	wire [31:0] salida;
 	reg clk;
 
-pc uut(
+pcBlock uut(
 	.in(in),
-	.out(out),
+	.salida(salida),
 	.clk(clk)
 );
 
@@ -40,12 +40,22 @@ end
 
 initial 
 begin
-	in=32'b1000_1000_1000_1000_1000_1000_1000_1000;
+	in=32'b0000_0000_0000_0000_0000_0000_0000_0100;
 	#100;
+	in=32'b0000_0000_0000_0000_0000_0000_0000_0100;
+    #100;
+    in=32'b0000_0000_0000_0000_0000_0000_0000_0100;
+    #100;
+	/*
 	in=32'b1100_1000_1000_1000_1000_1000_1000_1000;
 	#100;
 	in=32'b0000_1000_1000_1000_1000_1000_1000_1000;
 	#100;
+	
+	in=32'bxxxx_xxxx_xxxx_xxxx_xxxx_xxxx_xxxx_xxxx;
+	#100;
+	in=32'bxxxx_xxxx_xxxx_xxxx_xxxx_xxxx_xxxx_xxxx;
+    #100;*/
 end
 
 endmodule

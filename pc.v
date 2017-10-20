@@ -1,67 +1,84 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:
+// Engineer:
+//
 // Create Date: 06.10.2017 08:53:47
-// Design Name: 
+// Design Name:
 // Module Name: pc
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 
 module pc(
     input  SaltoCond,
-	input [31:0] extSigno,
+	input [31:0] extSigno, 
 	input oZero,
     input clk,
-    output wire [31:0] direinstrux 
+    input reset,
+    output wire [31:0] direinstru
     );
-    wire [31:0] ext2;
-	wire [31:0] sum2sum;
+    
+    
+	reg [31:0] sum2sum;
     wire [31:0] salSum2;
 	wire FuentePC; // salida de la and
-	wire [31:0] toPC;
-	//wire [3:0] varCuatro;
-	
-	
-	parameter varCuatro=32'b0000_0000_0000_0000_0000_0000_0000_0100; 
-	
-	sumador sum2(
-                .a(sum2sum),
-                .b(ext2),
-                .s(salSum2)
-                );
-     mux4 mod_mux(
-                 .inMem(salSum2),
-                 .inALU(sum2sum),
-                 .inControl(FuentePC),
-                 .out(toPC)//(toPC)                
-                   );
-                  
-      pcBlock pcu(
-            .in(toPC),
-            .clk(clk),
-            .salida(direinstrux)
-            );
-      sumador sum1(
-                .a(direinstrux),
-                .b(varCuatro),
-                .s(sum2sum)
-                   );
-	assign ext2=extSigno<<2;
-                   
-    assign FuentePC= SaltoCond & oZero;
+	reg [31:0] aux;
+	wire [31:0] auxx; 
 
-       
-endmodule
+    parameter init = 0;
+    
+    assign direinstru = reset==1 ? 32'b0000_0000_0000_0000_0000_0000_0000_0000 : aux;
+    //assign sum2sum = reset==1 ? 32'b0000_0000_0000_0000_0000_0000_0000_0000:sum2sum;
+    //assign salSum2 = (reset==1) ? 32'b0000_0000_0000_0000_0000_0000_0000_0000 : salSum2;
+    
+    //assign aux = (~FuentePC) ? salSum2 : sum2sum;
+    assign FuentePC = SaltoCond & oZero;
+    assign salSum2 =  extSigno+ auxx;
+    assign auxx=({extSigno[29:0],2'b00});
+ 
+    always @(posedge clk)
+        begin
+            if (FuentePC==1)
+                begin
+                   aux <= salSum2;
+                end
+                 
+                else
+                    aux <= sum2sum;
+                        
+            
+        end
+      
+    always @(posedge clk)
+        begin
+            
+            sum2sum <= direinstru +1;
+            
+             
+            
+            if (direinstru == 255)
+                begin
+                   sum2sum = 0;
+                end
+            else
+                   sum2sum = direinstru;
+        end
+        /*
+        initial begin
+            //direinstru=0;
+            //salSum2=0;
+            sum2sum=32'b0000_0000_0000_0000_0000_0000_0000_0000;
+            end*/
+            
+    endmodule

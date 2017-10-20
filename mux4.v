@@ -25,16 +25,19 @@ module mux4(
     input [31:0] inALU,
     input inControl,
     
-    output reg [31:0] out
+    output wire [31:0] out
     );
     
-    always @(inControl)
+    assign out = (inControl==1)?inMem:inALU;
+    /*always @(inControl)
         begin
             if (inControl==1)
                 out=inMem;
             else
                 out=inALU;
-            
-                
         end
+
+	always @(inControl) begin  
+  		$display("mux presente out=%h, inControl=%h",out,inControl);
+	end*/
 endmodule
