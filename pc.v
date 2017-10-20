@@ -30,55 +30,44 @@ module pc(
     );
     
     
-	reg [31:0] sum2sum;
+	wire [31:0] sum2sum;
     wire [31:0] salSum2;
-	wire FuentePC; // salida de la and
+	wire FuentePC; // salida de la and, entrada del mux
 	reg [31:0] aux;
-	wire [31:0] auxx; 
+	//wire [31:0] auxx; 
 
     parameter init = 0;
     
     assign direinstru = reset==1 ? 32'b0000_0000_0000_0000_0000_0000_0000_0000 : aux;
-    //assign sum2sum = reset==1 ? 32'b0000_0000_0000_0000_0000_0000_0000_0000:sum2sum;
-    //assign salSum2 = (reset==1) ? 32'b0000_0000_0000_0000_0000_0000_0000_0000 : salSum2;
-    
-    //assign aux = (~FuentePC) ? salSum2 : sum2sum;
     assign FuentePC = SaltoCond & oZero;
-    assign salSum2 =  extSigno+ auxx;
-    assign auxx=({extSigno[29:0],2'b00});
+    assign salSum2 =  extSigno+ {extSigno[29:0],2'b00};
+    assign sum2sum = direinstru +1;
+    
+    //****************************
+    //REVISAR SIGUIENTE LINEA
+    //assign sum2sum= (direinstru==255)? 0 : direinstru;
+   
  
     always @(posedge clk)
         begin
             if (FuentePC==1)
                 begin
-                   aux <= salSum2;
+                   aux = salSum2;
                 end
                  
-                else
-                    aux <= sum2sum;
-                        
+            else
+				begin
+                    aux = sum2sum;          
+				end
+        
             
-        end
-      
-    always @(posedge clk)
-        begin
-            
-            sum2sum <= direinstru +1;
-            
-             
-            
+                        /*   
             if (direinstru == 255)
                 begin
                    sum2sum = 0;
                 end
             else
-                   sum2sum = direinstru;
+                   sum2sum = direinstru;*/
         end
-        /*
-        initial begin
-            //direinstru=0;
-            //salSum2=0;
-            sum2sum=32'b0000_0000_0000_0000_0000_0000_0000_0000;
-            end*/
             
     endmodule
