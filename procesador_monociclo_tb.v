@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 06.10.2017 08:53:47
+// Create Date: 21.10.2017 03:04:53
 // Design Name: 
-// Module Name: sumador
+// Module Name: procesador_monociclo_tb
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -19,22 +19,30 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module sumador(
-	input [31:0] a,
-	output [31:0] s
+
+module procesador_monociclo_tb();
+    reg clk;
+    reg reset;
+
+	procesador_monociclo uut(
+		.clk(clk),
+		.reset(reset)
 	);
 
-assign s = a + 1;
+	always begin
+		clk=1'b1; 
+		#50;
+		clk=1'b0;
+		#50;
+	end
 
+initial begin
+	reset=1'b1;
+	#100;
+	reset=1'b0;
+	#100;
+	
 
-/*always @(a or b) begin  
-  $display("Sumador presente s=%h ",s);
-end*/
-
-
-
-//assign s = ~a & ~b & cIn + ~a & b & ~cIn + a & ~b & ~cIn + a & b & cIn;
-
-//assign cOut = b & cIn + a & cIn + ab;
-
+end
+	
 endmodule

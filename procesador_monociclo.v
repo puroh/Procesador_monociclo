@@ -63,9 +63,10 @@ module procesador_monociclo(
  
  
  memoriaintrucciones memoriainstru(
-                                    .direinstru(direinstrux),
-                                   .instru(instru)
-                                   );
+            .direinstru(direinstrux),
+            .instru(instru),
+			.clk(clk)			
+             );
  
  control control(.instru(instru[31:26]),
                  .clk(clk),
@@ -113,10 +114,17 @@ module procesador_monociclo(
            .SaltoCond(SaltoCond),
             .extSigno(oinstru),
             .oZero(oZero),
-            .direinstrux(direinstrux),
-            .clk(clk),  
+            .direinstru(direinstrux),
+            .clk(clk),   
             .reset(reset)           
    );
+   
+   controlALU contrALU(
+        .ALUop(ALUOp),
+        .instru(instru),
+        .contALU(ctrl),
+        .clk(clk)
+        );
 
 
 assign RegEscr1 = RegDest ? instru[15:11]: instru[20:16];
