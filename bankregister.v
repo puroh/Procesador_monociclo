@@ -28,33 +28,38 @@ module bankregister(
     input clk,
     input [31:0] datain,
     output reg [31:0] data1,
-    output reg [31:0] data2
+    output reg [31:0] data2,
+    input reset
     );
     
 reg [31:0] register [31:0];
 wire [31:0] aux;
 
-always @(posedge clk)
-    begin    
+
+always @(posedge clk )
+    begin 
+        if(reset==1)
+        begin
+        register[0] = 32'b0000_0000_0000_0000_0000_0000_0000_0000;
+        register[1] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;
+        register[2] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;
+        register[3] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;
+        register[4] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;
+        register[6] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;
+        register[7] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;
+        register[8] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;     
+        end
+    else
+        register[0] = 32'b0000_0000_0000_0000_0000_0000_0000_0000;
+               
+
     data1 = register[RegLe1];
     data2 = register[RegLe2];
     register[RegEscr] = aux;    
 
     end
     
-    
-initial begin
-
-register[0] = 32'b0000_0000_0000_0000_0000_0000_0000_0000;
-register[1] = 32'b00000000_00000000_00000000_00000001;
-register[2] = 32'b00000000_00000000_00000000_00000001;
-register[3] = 32'b00000000_00000000_00000000_00000001;
-register[4] = 32'b00000000_00000000_00000000_00000001;
-register[6] = 32'b00000000_00000000_00000000_00000001;
-register[7] = 32'b00000000_00000000_00000000_00000001;
-register[8] = 32'b00000000_00000000_00000000_00000001;
-end   
  
-assign aux = EscrReg ? datain : register[RegEscr];
+assign aux = (EscrReg==1) ? datain : register[RegEscr];
 
 endmodule
