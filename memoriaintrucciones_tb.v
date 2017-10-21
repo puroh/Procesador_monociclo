@@ -24,21 +24,36 @@ module memoriaintrucciones_tb;
 
    reg [5:0] direinstru;
    wire [31:0] instru;
+   reg clk;
+	reg reset;
     
 memoriaintrucciones uut(
     .direinstru(direinstru),
-    .instru(instru)
+    .instru(instru),
+    .clk(clk)
  );
+
+always begin 
+
+clk = 1'b1;
+#50;
+clk = 1'b0;
+#50;
+
+end
     
 initial begin
-
-direinstru = 6'b000000;
-#50;
-direinstru = 6'b000001;
-#50;
-direinstru = 6'b000010;
-#50;
-direinstru = 6'b000011;
+reset = 1'b1;
+#100
+reset = 1'b0;
+#100
+direinstru = 5'b00000;
+#100;
+direinstru = 5'b00001;
+#100;
+direinstru = 5'b00010;
+#100;
+direinstru = 5'b00011;
 
 
 end
