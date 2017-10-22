@@ -21,10 +21,11 @@
 
 
 module procesador_monociclo(
+clk,reset
 
 );
 
- reg clk;
+input wire clk;
  reg [5:0] direinstru;
  wire [31:0] instru;
  
@@ -40,14 +41,14 @@ module procesador_monociclo(
  wire [31:0] data2;
  wire [31:0] datain;
  wire [31:0] oinstru;
- wire ctrl;
+ wire [2:0] ctrl;
  wire oCarry;
  wire oZero;
  wire [31:0] out;
  wire [31:0] Dataout;
  
  //Para los mux
- wire [5:0] RegEscr1;
+ wire [4:0] RegEscr1;
  wire [31:0] data21;
  wire [31:0] dataEscr;
  
@@ -58,14 +59,15 @@ module procesador_monociclo(
   wire FuentePC;
   wire [31:0] toPC;
   wire [31:0]direinstrux;
-  wire reset;
+ input wire reset;
  parameter varCuatro=3'b100;
  
  
  memoriaintrucciones memoriainstru(
             .direinstru(direinstrux),
             .instru(instru),
-			.clk(clk)			
+			.clk(clk),
+			.reset(reset)			
              );
  
  control control(.instru(instru[31:26]),
@@ -87,7 +89,8 @@ module procesador_monociclo(
                         .clk(clk),
                         .datain(dataEscr), // Mux
                         .data1(data1),
-                        .data2(data2)           
+                        .data2(data2),
+                        .reset(reset)           
                         );
                         
  extencion_signo extencion(.instr(instru[15:0]),
@@ -121,9 +124,10 @@ module procesador_monociclo(
    
    controlALU contrALU(
         .ALUop(ALUOp),
-        .instru(instru),
-        .contALU(ctrl),
-        .clk(clk)
+        .instru(instru[5:0]),
+        .clk(clk),
+        .contALU(ctrl)
+        
         );
 
 

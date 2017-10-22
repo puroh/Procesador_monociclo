@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 21.10.2017 03:04:53
+// Create Date: 21.10.2017 10:51:16
 // Design Name: 
-// Module Name: procesador_monociclo_tb
+// Module Name: controlALU_tb
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,29 +20,38 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module procesador_monociclo_tb();
+module controlALU_tb();
+    reg [1:0]ALUop;
+    reg [5:0]instru;
     reg clk;
-    reg reset;
-
-	procesador_monociclo uut(
+    wire [2:0] contALU;
+    
+ controlALU uut(
+ 		.ALUop(ALUop),
+		.instru(instru),
 		.clk(clk),
-		.reset(reset)
-	);
-
+		.contALU(contALU)
+ );
 	always begin
-		clk=1'b1; 
-		#50;
+
+		clk=1'b1;
+		#100;
 		clk=1'b0;
-		#50;
-	end
+		#100;
+
+		end
 
 initial begin
-	reset=1'b1;
-	#101;
-	reset=1'b0;
-	#101;
-	
-
+	ALUop=2'b10;
+	instru=6'bxxxxxx;
+	#100;
+	ALUop=2'b10;
+	instru=6'bxxxxxx;
+	#100;
+	ALUop=2'b10;
+	instru=6'b1xxxxx;
+	#100;
+    ALUop=2'b10;
+    instru=6'b101010;
 end
-	
 endmodule

@@ -74,7 +74,10 @@ else
       
     if (CSrom==1)
         begin
-            Dataout = ROM[Direc[7:0]];
+            if(ROM[0]==0)
+                Dataout = ROM[Direc[7:0]];
+            else
+                ROM[0]=0;
         end
     else
         begin

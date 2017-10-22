@@ -21,9 +21,9 @@
 
 
 module bankregister(
-    input [5:0] RegLe1,
-    input [5:0] RegLe2,
-    input [5:0] RegEscr,
+    input [4:0] RegLe1,
+    input [4:0] RegLe2,
+    input [4:0] RegEscr,
     input EscrReg,
     input clk,
     input [31:0] datain,
@@ -40,8 +40,10 @@ always @(posedge clk )
     begin 
         if(reset==1)
         begin
+		data1=32'b0000_0000_0000_0000_0000_0000_0000_0000;
+		data2=32'b0000_0000_0000_0000_0000_0000_0000_0000;
         register[0] = 32'b0000_0000_0000_0000_0000_0000_0000_0000;
-        register[1] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;
+        register[1] = 32'b0000_0000_0000_0000_0000_0000_0000_0100;
         register[2] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;
         register[3] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;
         register[4] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;
