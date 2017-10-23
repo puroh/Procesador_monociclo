@@ -31,6 +31,7 @@ input wire clk;
  
  wire RegDest;
  wire SaltoCond;
+ wire Saltoincond;
  wire LeerMem;
  wire MemaReg;
  wire [1:0]ALUOp;
@@ -73,6 +74,7 @@ input wire clk;
  control control(.instru(instru[31:26]),
                  .clk(clk),
                  .RegDest(RegDest),
+				.Saltoincond(Saltoincond),
                  .SaltoCond(SaltoCond),
                  .LeerMem(LeerMem),
                  .MemaReg(MemaReg),
@@ -116,11 +118,13 @@ input wire clk;
                      );
    pc pro_counter(
            .SaltoCond(SaltoCond),
+			.Saltoincond(Saltoincond),
             .extSigno(oinstru),
             .oZero(oZero),
             .direinstru(direinstrux),
             .clk(clk),   
-            .reset(reset)           
+            .reset(reset),
+			.instru(instru)           
    );
    
    controlALU contrALU(

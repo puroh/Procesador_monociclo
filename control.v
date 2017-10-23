@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module control(instru,clk,RegDest,SaltoCond,LeerMem,MemaReg,ALUOp,EscrMem,FuenteALU,EscrReg);
+module control(Saltoincond,instru,clk,RegDest,SaltoCond,LeerMem,MemaReg,ALUOp,EscrMem,FuenteALU,EscrReg);
 
 input [5:0]instru;
 input clk;
@@ -32,22 +32,23 @@ output wire [1:0]ALUOp;
 output wire EscrMem;
 output wire FuenteALU;
 output wire EscrReg;
+output wire Saltoincond;
 
-reg [8:0]aux;
+reg [9:0]aux;
 
 
-always @ (posedge clk)
+always @ (*)
 begin 
     case(instru)
-        6'b000_000: aux=9'b100_100_010;
-        6'b100_011: aux=9'b0_1111_0000;//lectura
-        6'b101_011: aux=9'bx1x001000;//carga
-        6'b000_100: aux=9'bx0x000101;
-        default:  aux=9'b100_100_010;        
+        6'b000_000: aux=10'b0100_100_010;
+        6'b100_011: aux=10'b00_1111_0000;//lectura
+        6'b101_011: aux=10'b0x1x001000;//carga
+        6'b000_100: aux=10'b0x0x000101;
+        default:  aux=10'b0100_100_010;        
     endcase
 
 end
-
+assign Saltoincond  = aux[9];
 assign RegDest      = aux[8];
 assign FuenteALU    = aux[7];//
 assign MemaReg      = aux[6];

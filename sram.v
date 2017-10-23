@@ -26,11 +26,12 @@ module sram(clk,CSram,Direc,Datain,LeerMem,Dataout,EscrMem);
     input [7:0] Direc;
     input [31:0] Datain;
     input LeerMem;
-    output reg [31:0] Dataout;
+    output wire [31:0] Dataout;
     input EscrMem;//bit
     
 reg [31:0] RAM [0:255];
 
+assign Dataout = LeerMem ? RAM[Direc]:32'b0;
 
 always @ (posedge clk) 
 begin
@@ -42,15 +43,6 @@ begin
             RAM[Direc] = Datain;
         end  
 
-    else if (LeerMem==1'b1)
-        begin
-            Dataout = RAM[Direc];
-        end
-    else
-        begin
-            
-           
-        end
 end
 end
 endmodule

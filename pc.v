@@ -22,10 +22,12 @@
 
 module pc(
     input  SaltoCond,
+	input Saltoincond,
 	input [31:0] extSigno, 
 	input oZero,
     input clk,
     input reset,
+	input [27:0]instru,
     output wire [31:0] direinstru
     );
     
@@ -33,15 +35,18 @@ module pc(
 	wire [31:0] sum2sum;
     wire [31:0] salSum2;
 	wire FuentePC; // salida de la and, entrada del mux
-	reg [31:0] aux;
-	//wire [31:0] auxx; 
+	wire [31:0] sal2PC;
+	reg [31:0] mux2mux;
+	//wire [31:0] a; 
 
     parameter init = 0;
     
-    assign direinstru = reset==1 ? 32'b0000_0000_0000_0000_0000_0000_0000_0000 : aux;
+    assign direinstru = reset==1 ? 32'b0000_0000_0000_0000_0000_0000_0000_0000 :sal2PC ;
     assign FuentePC = SaltoCond & oZero;
     assign salSum2 =  extSigno+ {extSigno[29:0],2'b00};
     assign sum2sum = direinstru +1;
+    assign sal2PC = (Saltoincond)? {sum2sum[31:28],instru[27:0]} : mux2mux;
+	 
     
     //****************************
     //REVISAR SIGUIENTE LINEA
@@ -52,16 +57,17 @@ module pc(
         begin
             if (FuentePC==1)
                 begin
-                   aux = salSum2;
+                   mux2mux = salSum2;
                 end
                  
             else
 				begin
-                    aux = sum2sum;          
+                    mux2mux = sum2sum;          
 				end
-        
+
+		
             
-                        /*   
+                     /*    
             if (direinstru == 255)
                 begin
                    sum2sum = 0;

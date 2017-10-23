@@ -31,16 +31,16 @@ module procesador_monociclo_tb();
 
 	always begin
 		clk=1'b1; 
-		#5;
+		#50;
 		clk=1'b0;
-		#5;
+		#50;
 	end
 
 initial begin
 	reset=1'b1;
-	#11;
+	#101;
 	reset=1'b0;
-	#11;
+	#101;
 	
 
 end
