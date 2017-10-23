@@ -20,12 +20,14 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module extencion_signo(instr,oinstr);
+module extencion_signo(clk,instr,oinstr);
 
     input [15:0] instr;
-    output wire [31:0] oinstr;
-
-assign oinstr = instr[15] ? ({16'b1111111111111111,instr[15:0]}) :  ({16'b0000000000000000,instr[15:0]});  
-    
+    input clk;
+    output reg [31:0] oinstr;
+always @(posedge clk)
+begin
+ oinstr = instr[15] ? ({16'b1111111111111111,instr[15:0]}) :  ({16'b0000000000000000,instr[15:0]});  
+    end
     
 endmodule

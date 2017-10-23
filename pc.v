@@ -45,7 +45,7 @@ module pc(
     
     //****************************
     //REVISAR SIGUIENTE LINEA
-    //assign sum2sum= (direinstru==255)? 0 : direinstru;
+    //assign direinstru= (direinstru==32)? 0 : direinstru;
    
  
     always @(posedge clk)

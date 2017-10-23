@@ -38,10 +38,10 @@ always @ (posedge clk)
 begin
 
 if (reset == 1)
-begin
-        registro_rom[0] = 32'b0000_0000_0000_0001__0001_1000_0101_0000;
-        registro_rom[1] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;
-        registro_rom[2] = 32'b0000_0000_0000_0000_0000_0000_0000_0010;
+begin   
+        registro_rom[0] = 32'b1010_1100_0010_0011__0000_0000_0000_0000;//carga un 9 en sram1 posicion 4
+        registro_rom[1] = 32'b1000_1100_0011_1111__0000_0000_0000_0000; // Lee el dato anterior guardado(sram1 pos 4)
+        registro_rom[2] = 32'b1000_1100_0000_0001__0001_1000_0110_0000; //hace una suma     
         registro_rom[3] = 32'b0000_0000_0000_0000_0000_0000_0000_0011;
         registro_rom[4] = 32'b0000_0000_0000_0000_0000_0000_0000_0010;
         registro_rom[5] = 32'b0000_0000_0000_0000_0000_0000_0000_0001;

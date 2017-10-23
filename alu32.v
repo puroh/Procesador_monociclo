@@ -8,7 +8,7 @@ output reg oCarry;
 output reg oZero;
 output reg [31:0] out;
 
-always@ (posedge clk)
+always@ (*)
     begin 
         case(ctrl)
             3'b010: {oCarry ,out} <= data1+data2;

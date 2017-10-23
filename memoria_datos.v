@@ -28,15 +28,21 @@ module memoria_datos(clk,EscrMem,Direc,Datain,LeerMem,Dataout);
     input LeerMem;//bit
     output reg [31:0] Dataout;
     
-reg [255:0] ROM [31:0];
+
+
+wire CSram1;
+wire CSram2;
+
+wire [2:0] CS;
+
 wire [31:0] Dataout1;
-reg CSram1;
-reg CSram2;
+wire [31:0] Dataout2;
+wire [31:0] Dataout3;
 wire CSrom;
  
 sram sram1(.clk(clk),
            .CSram(CSram1),
-           .Direc(Direc),
+           .Direc(Direc[7:0]),
            .Datain(Datain),
            .LeerMem(LeerMem),
            .Dataout(Dataout1),
@@ -44,46 +50,44 @@ sram sram1(.clk(clk),
            );
 sram sram2(.clk(clk),
            .CSram(CSram2),
-           .Direc(Direc),
+           .Direc(Direc[7:0]),
            .Datain(Datain),
            .LeerMem(LeerMem),
-           .Dataout(Dataout1),
+           .Dataout(Dataout2),
            .EscrMem(EscrMem)
            );
 
-assign CSrom = (Direc[8])&EscrMem; 
-         
-always @ (posedge clk) 
-begin
+sram ROM(
+           .clk(clk),
+           .CSram(CSrom),
+           .Direc(Direc[7:0]),
+           .Datain(Datain),
+           .LeerMem(LeerMem),
+           .Dataout(Dataout3),
+           .EscrMem(EscrMem)
+           );
 
-if(Direc[31:8]==24'b1111_1111_1111_1111_1111_1111)
-    begin
-        CSram1=1'b1;
-        CSram2=1'b0;
-    end
-else if(Direc[31:8]==24'b1111_1111_1111_1111_1111_1110)
-    begin
-        CSram1=1'b0;
-        CSram2=1'b1;
-    end
-else
-    begin
-         CSram1=1'b0;
-         CSram2=1'b0;
-    end
-      
-    if (CSrom==1)
-        begin
-            if(ROM[0]==0)
-                Dataout = ROM[Direc[7:0]];
-            else
-                ROM[0]=0;
-        end
-    else
-        begin
+
+
+
+assign CSrom  = (Direc[31:8]==24'b0000_0000_0000_0000_0000_0100) ? 1 : 0 ; 
+assign CSram1 = ((Direc[31:8]==24'b0000_0000_0000_0000_0000_0000)|(Direc[31:8]==24'b0000_0000_0000_0000_0000_0001)) ? 1 : 0 ;
+assign CSram2 = ((Direc[31:8]==24'b0000_0000_0000_0000_0000_0010)|(Direc[31:8]==24'b0000_0000_0000_0000_0000_0011)) ? 1 : 0 ;
+assign CS = {CSrom,CSram1,CSram2};
+always @ (*)
+
+begin
+    
+
+    case(CS)
+        3'b100:Dataout = Dataout3;
+        3'b010:Dataout = Dataout1;
+        3'b001:Dataout = Dataout2;
+    endcase
         
-            Dataout = Dataout1;
-        end
-   end
+end
+
+
+
 endmodule
 

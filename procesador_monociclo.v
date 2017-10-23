@@ -94,7 +94,8 @@ input wire clk;
                         );
                         
  extencion_signo extencion(.instr(instru[15:0]),
-                           .oinstr(oinstru)                        
+                           .oinstr(oinstru),
+                           .clk(clk)                        
                            ); 
    
  alu32 alu(.data1(data1),

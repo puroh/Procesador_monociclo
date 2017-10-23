@@ -35,23 +35,39 @@ module controlALU_tb();
 	always begin
 
 		clk=1'b1;
-		#100;
+		#50;
 		clk=1'b0;
-		#100;
+		#50;
 
 		end
 
 initial begin
-	ALUop=2'b10;
-	instru=6'bxxxxxx;
+	ALUop=2'b00;
+	instru=6'bx1x_x1x;
 	#100;
-	ALUop=2'b10;
-	instru=6'bxxxxxx;
+	ALUop=2'b00;
+	instru=6'b001_101;
+	#100;  //200
+	ALUop=2'b01;
+	instru=6'b111_001;
+	#100; //300
+    ALUop=2'b10;
+    instru=6'b100000;
+    #100; //400
+    ALUop=2'b10;
+    instru=6'b100010;
+    #100; //500
+    ALUop=2'b10;
+    instru=6'b100100;
 	#100;
-	ALUop=2'b10;
-	instru=6'b1xxxxx;
+    ALUop=2'b10;
+    instru=6'b100101;
 	#100;
     ALUop=2'b10;
     instru=6'b101010;
+	#100;
+    ALUop=2'b11;
+    instru=6'b111111;
+
 end
 endmodule

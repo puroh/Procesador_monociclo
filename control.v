@@ -34,28 +34,25 @@ output wire FuenteALU;
 output wire EscrReg;
 
 reg [8:0]aux;
-parameter [8:0] op1 = 9'b100_100_010; 
-parameter [8:0] op2 = 9'b0_1111_0000; 
-parameter [8:0] op3 = 9'bx1x001000; 
-parameter [8:0] op4 = 9'bx0x000101; 
+
 
 always @ (posedge clk)
 begin 
     case(instru)
-        6'b000000: aux=op1;
-        6'b100011: aux=op2;
-        6'b101011: aux=op3;
-        6'b000100: aux=op4;
-        default:   aux=op1;        
+        6'b000_000: aux=9'b100_100_010;
+        6'b100_011: aux=9'b0_1111_0000;//lectura
+        6'b101_011: aux=9'bx1x001000;//carga
+        6'b000_100: aux=9'bx0x000101;
+        default:  aux=9'b100_100_010;        
     endcase
 
 end
 
 assign RegDest      = aux[8];
-assign FuenteALU    = aux[7];
+assign FuenteALU    = aux[7];//
 assign MemaReg      = aux[6];
 assign EscrReg      = aux[5];
-assign LeerMem      = aux[4];
+assign LeerMem      = aux[4];//
 assign EscrMem      = aux[3];
 assign SaltoCond    = aux[2];
 assign ALUOp        = aux[1:0];

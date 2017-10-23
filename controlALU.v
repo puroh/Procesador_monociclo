@@ -27,22 +27,31 @@ module controlALU(
     output reg [2:0]contALU
     );
     
-    always @(posedge clk)
+    always @(*)
     begin
-        case ({ALUop,instru})
-            
-                8'b00xxxxxx:contALU=   3'b010;
-                8'b00xxxxxx:contALU=   3'b010;
-                8'b01xxxxxx:contALU=   3'b110;                                
-                8'b10100000:contALU=   3'b010;
-                8'b10100010:contALU=   3'b110;
-                8'b10100100:contALU=   3'b000;
-                8'b10100101:contALU=   3'b001;
-                8'b10101010:contALU=   3'b111;
+		if (ALUop==2'b00)
+			begin
+			contALU=   3'b010;
+			end
+	
+		else if (ALUop==2'b01)
+			begin
+			contALU=	3'b110;
+			end
+		else
+			begin
+				case (instru)
+		
+                                              
+                6'b100000:contALU=   3'b010;
+                6'b100010:contALU=   3'b110;
+                6'b100100:contALU=   3'b000;
+                6'b100101:contALU=   3'b001;
+                6'b101010:contALU=   3'b111;
                 default:    contALU=   3'b101;
-                                  
-        endcase   
-            
-        
+                endcase
+			end
+		                   
+                 
     end
 endmodule
