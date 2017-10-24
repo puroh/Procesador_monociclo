@@ -11,8 +11,8 @@ output reg [31:0] out;
 always@ (*)
     begin 
         case(ctrl)
-            3'b010: {oCarry ,out} <= data1+data2;
-            3'b110: begin {oCarry, out} <= data1-data2;
+            3'b010: {oCarry ,out} = data1+data2;
+            3'b110: begin {oCarry, out} = data1-data2;
                                               
                     if (out == 32'b0000_0000_0000_0000_0000_0000_0000_0000)//no entra
                             oZero = 1;
@@ -20,14 +20,14 @@ always@ (*)
                             oZero = 0;
                     end
       
-            3'b000: out <= data1&data2;
-            3'b001: out <= data1|data2;
-            3'b111: out <= data1^data2;
+            3'b000: out = data1&data2;
+            3'b001: out = data1|data2;
+            3'b111: out = data1^data2;
             default: 
                 begin
-                    out  <= data1;
-                    oZero <= 0;
-                    oCarry<= 0;
+                    out  = data1;
+                    oZero = 0;
+                    oCarry = 0;
                 end            
         endcase
     end

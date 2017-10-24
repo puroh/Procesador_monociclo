@@ -44,7 +44,9 @@ begin
         6'b100_011: aux=10'b00_1111_0000;//lectura
         6'b101_011: aux=10'b0x1x001000;//carga
         6'b000_100: aux=10'b0x0x000101;
-        default:  aux=10'b0100_100_010;        
+        6'b111_111: aux=10'b00_1010_0000;//not
+        6'b111_110: aux=10'b00_0000_0101;
+        default:  aux=10'b00_1010_0000;        
     endcase
 
 end
